@@ -1,0 +1,157 @@
+{
+	"editor.formatOnSave": true,
+	"npm.packageManager": "pnpm",
+	"npm.runSilent": true,
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"task.allowAutomaticTasks": "on",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"biome.enabled": false,
+	"css.lint.unknownAtRules": "ignore",
+	"amp.experimental.fuzzySearch.enabled": true,
+	"search.exclude": {
+		"vscode/src/autoedit/webview/build": true,
+		"web/build": true,
+		"**/.vite/build": true,
+		"**/.svelte-kit": true,
+		"**/out": true,
+		"**/dist": true,
+		"**/node_modules": true,
+		"**/testdata": true
+	},
+	"vitest.maximumConfigs": 20,
+	"vitest.configSearchPatternExclude": "{**/node_modules/**,**/dist/**,**/.*/**,**/*.d.ts}",
+	"[svelte]": {
+		"editor.defaultFormatter": "svelte.svelte-vscode"
+	},
+	"eslint.validate": ["javascript", "typescript", "svelte"],
+	"svelte.plugin.svelte.runesLegacyModeCodeLens.enable": false,
+	"amp.mcpServers": {
+		"playwright": {
+			"command": "npx",
+			"args": ["-y", "@playwright/mcp@latest", "--headless", "--isolated"]
+		},
+		"postgres": {
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://localhost/amp"]
+		}
+	},
+	"amp.hooks": [
+		{
+			"compatibilityDate": "2025-05-13",
+			"id": "svelte5-syntax-props",
+			"on": {
+				"event": "tool:pre-execute",
+				"tool": ["edit_file", "create_file"],
+				"input.contains": "export let"
+			},
+			"action": {
+				"type": "send-user-message",
+				"message": "Always use Svelte 5 syntax (`let { ... } = $props()`) not `export let` (Svelte 4 syntax) in .svelte files"
+			}
+		},
+		{
+			"compatibilityDate": "2025-05-13",
+			"id": "svelte5-derived-by",
+			"on": {
+				"event": "tool:pre-execute",
+				"tool": ["edit_file", "create_file"],
+				"input.contains": "$derived(() =>"
+			},
+			"action": {
+				"type": "send-user-message",
+				"message": "Use $derived.by(() => { ... }) instead of $derived(() => { ... })"
+			}
+		},
+		{
+			"compatibilityDate": "2025-05-13",
+			"id": "bad-tsc-exec",
+			"on": {
+				"event": "tool:pre-execute",
+				"tool": ["Bash"],
+				"input.contains": ["pnpm exec tsc server/", "pnpm exec tsc web/"]
+			},
+			"action": {
+				"type": "send-user-message",
+				"message": "Use `pnpm -C server check` or `pnpm -C web check` instead of `pnpm exec tsc`"
+			}
+		},
+		{
+			"compatibilityDate": "2025-05-13",
+			"id": "bad-tsc-exec-2",
+			"on": {
+				"event": "tool:pre-execute",
+				"tool": ["Bash"],
+				"input.contains": ["exec tsc -b web", "exec tsc -b server"]
+			},
+			"action": {
+				"type": "send-user-message",
+				"message": "Use `pnpm -C server check` or `pnpm -C web check` instead"
+			}
+		},
+		{
+			"compatibilityDate": "2025-05-13",
+			"id": "bad-tsc-exec-3",
+			"on": {
+				"event": "tool:pre-execute",
+				"tool": ["Bash"],
+				"input.contains": ["&& pnpm exec tsc --noEmit src/"]
+			},
+			"action": {
+				"type": "send-user-message",
+				"message": "Use `pnpm exec tsc -b`, `pnpm -C server check` or `pnpm -C web check` instead"
+			}
+		},
+		{
+			"compatibilityDate": "2025-05-13",
+			"id": "bad-test-1",
+			"on": {
+				"event": "tool:pre-execute",
+				"tool": ["Bash"],
+				"input.contains": ["pnpm test --run server/"]
+			},
+			"action": {
+				"type": "send-user-message",
+				"message": "Use `pnpm -C server test [specific-test-file-basename]` instead"
+			}
+		},
+		{
+			"compatibilityDate": "2025-05-13",
+			"id": "bad-icon-import",
+			"on": {
+				"event": "tool:pre-execute",
+				"tool": ["edit_file", "create_file"],
+				"input.contains": ["from '@lucide/svelte'"]
+			},
+			"action": {
+				"type": "send-user-message",
+				"message": "Use `import Foo from @lucide/svelte/icons/foo` for icons (not `import { Foo } from '@lucide/svelte'`)"
+			}
+		},
+		{
+			"compatibilityDate": "2025-05-13",
+			"id": "bad-amp-server-url",
+			"on": {
+				"event": "tool:pre-execute",
+				"tool": ["browser_navigate", "Bash"],
+				"input.contains": ["http://localhost:7002"]
+			},
+			"action": {
+				"type": "send-user-message",
+				"message": "The Amp Server (ampcode.com) dev server in `server/` is running on https://localhost:7002 (not http)."
+			}
+		}
+	],
+	"amp.experimental.customUserStateCommand": "test.sh",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit",
+		"source.removeUnusedImports": "explicit",
+		"source.organizeImports": "never"
+	},
+	"typescript.tsserver.maxTsServerMemory": 8192,
+	"typescript.tsserver.experimental.enableProjectDiagnostics": false,
+	"typescript.disableAutomaticTypeAcquisition": true,
+	"files.associations": {
+		"*.svx": "svelte"
+	},
+	"amp.experimental.centralizedStorage.enabled": false
+}
