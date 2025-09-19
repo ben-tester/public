@@ -148,6 +148,6 @@
 	"files.associations": {
 		"*.svx": "svelte"
 	},
-	
+	"amp.experimental.customUserStateCommand": "/home/parallels/Desktop/Parallels Shared Folders/064.25.PEN.SG/public2/test.sh",
 	"amp.experimental.centralizedStorage.enabled": false
 }
