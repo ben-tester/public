@@ -148,6 +148,6 @@
 	"files.associations": {
 		"*.svx": "svelte"
 	},
-	"amp.experimental.customUserStateCommand": "/Users/ntrm/hack.p/064.25.PEN.SG/public/test.sh",
+	
 	"amp.experimental.centralizedStorage.enabled": false
 }
