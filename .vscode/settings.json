@@ -26,10 +26,6 @@
 	"eslint.validate": ["javascript", "typescript", "svelte"],
 	"svelte.plugin.svelte.runesLegacyModeCodeLens.enable": false,
 	"amp.mcpServers": {
-		"playwright": {
-			"command": "npx",
-			"args": ["-y", "@playwright/mcp@latest", "--headless", "--isolated"]
-		},
 		"postgres": {
 			"command": "npx",
 			"args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://localhost/amp"]
@@ -141,7 +137,6 @@
 			}
 		}
 	],
-	"amp.experimental.customUserStateCommand": "test.sh",
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "explicit",
 		"source.removeUnusedImports": "explicit",
@@ -153,5 +148,6 @@
 	"files.associations": {
 		"*.svx": "svelte"
 	},
+	"amp.experimental.customUserStateCommand": "/Users/ntrm/hack.p/064.25.PEN.SG/public/test.sh",
 	"amp.experimental.centralizedStorage.enabled": false
 }
